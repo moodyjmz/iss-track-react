@@ -9,6 +9,7 @@ export default function FuturePass({ countries }) {
     const [risePromise, setRisePromise] = useState();
     const selectedCity = useRef();
     const abortController = useRef();
+    selectedCity.current = getCityFromId(countries, selectedCountryIndex);
 
 
     useEffect(() => {
@@ -17,7 +18,6 @@ export default function FuturePass({ countries }) {
         if (!countries || !countries.length) {
             return;
         }
-        selectedCity.current = getCityFromId(countries, selectedCountryIndex);
         if (selectedCity.current?.latlng) {
             setRisePromise(fetchFuturePositionForLocation(selectedCity.current, signal));
         }

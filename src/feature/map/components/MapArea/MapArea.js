@@ -1,6 +1,5 @@
-import React, { useRef, useState, useEffect, useMemo, use, Suspense } from "react";
+import React, { useRef, useState, useEffect, useMemo, use, Suspense, useCallback } from "react";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
-import { useMap } from 'react-leaflet/hooks';
 import "leaflet/dist/leaflet.css";
 import { fetchCurrentPosition } from '../../services/IssService';
 import Position from '../Position';
@@ -10,12 +9,13 @@ import { logger } from '../../utils/logger';
 import Loader from '../Loader/Loader';
 import L from 'leaflet';
 import iss from './iss.png';
+import { useIsTabVisible } from '../../hooks/useIsTabVisible';
 
 const issIcon = new L.Icon({
     iconUrl: iss,
     iconRetinaUrl: iss,
-    popupAnchor:  [-0, -0],
-    iconSize: [64,33],     
+    popupAnchor: [-0, -0],
+    iconSize: [64, 33],
 });
 const zoom = 5;
 
@@ -32,36 +32,41 @@ function DisplayPosition({ map, position }) {
     return null;
 }
 
-function MapInner({ countries, currentPositionPromise }) {
-    const position = use(currentPositionPromise);
+function MapContainerWrapper({position, setMap, loadCallback}) {
+    const handleLoad = useCallback(() => {
+        loadCallback && loadCallback(true);
+    })
+    return (<MapContainer
+        center={[position.latitude, position.longitude]}
+        zoom={zoom}
+        scrollWheelZoom={false}
+        ref={setMap}
+        whenReady={handleLoad}
+        style={{ height: '50vh' }}>
+        <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={[position.latitude, position.longitude]} icon={issIcon} />
+    </MapContainer>);
+}
 
+function MapInner({ countries, currentPositionPromise, mapReady }) {
+    const position = use(currentPositionPromise);
     const [map, setMap] = useState(null);
-    const handleMapLoad = (e) => {
-        console.log('handleMapLoad', e);
-    }
+
     const displayMap = useMemo(
         () => (
-            <MapContainer
-                center={[position.latitude, position.longitude]}
-                zoom={zoom}
-                scrollWheelZoom={false}
-                ref={setMap}
-                whenReady={handleMapLoad}
-                style={{ height: '50vh' }}>
-                <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <Marker position={[position.latitude, position.longitude]} icon={issIcon} />
-            </MapContainer>
+            position && <MapContainerWrapper setMap={setMap} loadCallback={mapReady} position={position}></MapContainerWrapper>
         ),
         [position]
     );
+
     return (
         <>
             {map && <DisplayPosition map={map} position={position} />}
             {displayMap}
-            
+
 
             <Position position={position}></Position>
             <ClosestCity countries={countries} position={position} />
@@ -70,10 +75,13 @@ function MapInner({ countries, currentPositionPromise }) {
 }
 
 export default function MapArea({ countries }) {
-    const currentPositionPromise = usePolling(fetchCurrentPosition);
+    const currentPositionPromise = usePolling(fetchCurrentPosition, useIsTabVisible());
+    const [mapReady, setMapReady] = useState(false);
     return (
         <div className='map-wrapper col'>
-            {currentPositionPromise && countries && <MapInner countries={countries} currentPositionPromise={currentPositionPromise} />}
+            {!mapReady && <Loader />}
+            {currentPositionPromise && countries && <MapInner mapReady={setMapReady} countries={countries} currentPositionPromise={currentPositionPromise} />}
         </div>
+
     )
 };

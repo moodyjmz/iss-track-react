@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { logger } from '../utils/logger';
-import { useIsTabVisible } from './useIsTabVisible';
 
-export function usePolling(fetchFunction, interval = 5000) {
-    const isPolling = useIsTabVisible();
+export function usePolling(fetchFunction, isPolling = true, interval = 5000) {
     const [dataPromise, setDataPromise] = useState(null);
     const timeoutRef = useRef();
     useEffect(() => {
