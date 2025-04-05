@@ -1,0 +1,8 @@
+.loader {
+    display: inline-block;
+    background-image: url(../../imgs/808.svg);
+    background-repeat: none;
+    background-size: contain;
+    height: 10px;
+    width: 100px;
+}
