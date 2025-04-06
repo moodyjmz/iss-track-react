@@ -19,9 +19,10 @@ To use:
 Add an env file, eg
 
 ```
-REACT_APP_COUNTRIES_SERVICE_URL=http://localhost:8000/countries
-REACT_APP_ISS_CURRENT_URL=http://api.open-notify.org/iss-now.json
-REACT_APP_ISS_PASSES_URL=https://api.g7vrd.co.uk/v1/satellite-passes/25544/%lat%/%lon%.json?hours=12
+VITE_COUNTRIES_SERVICE_URL=http://localhost:8000/countries
+VITE_ISS_CURRENT_URL=http://api.open-notify.org/iss-now.json
+VITE_ISS_PASSES_URL=https://api.g7vrd.co.uk/v1/satellite-passes/25544/%lat%/%lon%.json?hours=12
+
 ```
 
 `npm i`
