@@ -48,7 +48,11 @@ export function calcRiseTime(res, dateFormat = 'en-GB', dateStyle = 'short', tim
   return riseTimeResult;
 }
 
-export function fetchFuturePositionForLocation(coords, transport = {}) {
-  const url = buildFutureUrl(coords.latlng[0], coords.latlng[1]);
+export function fetchFuturePositionForLocation(opts) {
+  if(!opts.args || !opts.args.latlng) {
+    return;
+  }
+  const url = buildFutureUrl(opts.args.latlng[0], opts.args.latlng[1]);
+  const transport = opts.transport;
   return fetchWithRetries({url, transport, callback: calcRiseTime}, 3);
 }

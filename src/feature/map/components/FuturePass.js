@@ -3,29 +3,13 @@ import { fetchFuturePositionForLocation } from '../services/IssService';
 import RiseTime from './RiseTime';
 import Loader from './Loader/Loader';
 import { getCityFromId } from '../utils/cities';
+import { useAsyncData } from '../hooks/useAsyncData';
 
 export default function FuturePass({ countries }) {
     const [selectedCountryIndex, setSelectedCountryIndex] = useState(0);
-    const [risePromise, setRisePromise] = useState();
     const selectedCity = useRef();
-    const abortController = useRef();
     selectedCity.current = getCityFromId(countries, selectedCountryIndex);
-
-
-    useEffect(() => {
-        abortController.current = new AbortController();
-        const { signal } = abortController.current;
-        if (!countries || !countries.length) {
-            return;
-        }
-        if (selectedCity.current?.latlng) {
-            setRisePromise(fetchFuturePositionForLocation(selectedCity.current, signal));
-        }
-
-        return () => abortController.current.abort();
-
-    }, [selectedCountryIndex, countries, selectedCity]);
-
+    const risePromise = useAsyncData(fetchFuturePositionForLocation, selectedCity.current);
 
     const handleCountryChange = useCallback((event) => {
         setSelectedCountryIndex(event.target.value);
