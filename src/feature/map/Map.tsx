@@ -1,11 +1,11 @@
 import MapArea from './components/MapArea/MapArea';
 import FuturePass from './components/FuturePass';
-import { useEffect, useRef, useState, use, Suspense } from 'react';
+import { use, Suspense } from 'react';
 import { fetchCountries } from './services/CountriesService';
 import { ErrorBoundary } from 'react-error-boundary';
 import Loader from './components/Loader/Loader';
-import './map.css';
 import { useAsyncData } from './hooks/useAsyncData';
+import './map.css';
 
 function MapWrapper({ countriesPromise }) {
     const countries = use(countriesPromise);

@@ -4,7 +4,7 @@ import "leaflet/dist/leaflet.css";
 import { fetchCurrentPosition } from '../../services/IssService';
 import Position from '../Position';
 import { usePolling } from '../../hooks/usePolling';
-import ClosestCity from '../ClosestCity';
+import ClosestCapital from '../ClosestCity';
 import { logger } from '../../utils/logger';
 import Loader from '../Loader/Loader';
 import L from 'leaflet';
@@ -69,7 +69,7 @@ function MapInner({ countries, currentPositionPromise, mapReady }) {
 
 
             <Position position={position}></Position>
-            <ClosestCity countries={countries} position={position} />
+            <ClosestCapital countries={countries} position={position} />
         </>
     )
 }

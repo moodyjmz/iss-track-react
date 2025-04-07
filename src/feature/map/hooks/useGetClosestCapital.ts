@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
-import { getClosestCountry } from '../utils/cities';
-export default function useGetClosestCity({ position, countries }) {
+import { getClosestCapital } from '../utils/countries';
+export function useGetClosestCapital({ position, countries }) {
     let closestCityName;
     if (position && position.latitude && countries) {
-        const closestCity = getClosestCountry
+        const closestCity = getClosestCapital
             (
                 countries,
                 position.latitude,

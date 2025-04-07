@@ -2,8 +2,8 @@ import { useEffect, useState, use, useRef, Suspense, useCallback } from 'react';
 import { fetchFuturePositionForLocation } from '../services/IssService';
 import RiseTime from './RiseTime';
 import Loader from './Loader/Loader';
-import { getCityFromId } from '../utils/cities';
 import { useAsyncData } from '../hooks/useAsyncData';
+import { getCityFromId } from '../utils/countries/getCityFromId';
 
 export default function FuturePass({ countries }) {
     const [selectedCountryIndex, setSelectedCountryIndex] = useState(0);

@@ -1,11 +1,7 @@
 import { getDistance } from 'geolib';
 
 
-export function getCityFromId(countries, id) {
-  return countries[id];
-}
-
-export function getClosestCountry(countries, lat, lng) {
+export function getClosestCapital(countries, lat, lng) {
   let closestCountryIndex;
   let closestDistance;
 
