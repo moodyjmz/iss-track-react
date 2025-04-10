@@ -9,8 +9,8 @@ interface IssPosition {
     iss_position?: IssPosition;
   }
   
-  export function getLocationCoordinates(res: Response): Coordinates {
-    const coords: Coordinates = {};
+  export function getLocationCoordinates(res: Response): Coordinates|undefined {
+    const coords: Coordinates|undefined = {};
     
     if (res.iss_position) {
       coords.longitude = Number(res.iss_position.longitude);

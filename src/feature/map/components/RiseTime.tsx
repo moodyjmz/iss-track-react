@@ -1,11 +1,15 @@
-import { use } from 'react';
+import { JSX, use } from 'react';
 
-export default function RiseTime({ risePromise }) {
+interface RiseTimeProps {
+    risePromise: Promise<{ result?: string }>;
+}
+
+export default function RiseTime({ risePromise }: RiseTimeProps): JSX.Element {
     const riseTime = use(risePromise);
-    console.log('riseTime', riseTime);
+
     return (
         <>
             {riseTime?.result ? riseTime.result : `Not visible in the next 12 hours`}
         </>
-    )
+    );
 }

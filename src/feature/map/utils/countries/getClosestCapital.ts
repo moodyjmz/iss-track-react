@@ -1,10 +1,6 @@
-import { getClosestCapital } from '../utils/countries';
-
 import { Country } from '../../defs/country';
 import { Coordinates } from '../../defs/coordinates';
 import { getClosestCountry } from './getClosestCountry';
-
-
 
 interface CapitalProps {
   position: Coordinates | null;

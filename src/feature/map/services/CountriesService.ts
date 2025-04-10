@@ -1,5 +1,5 @@
 import { COUNTRIES_SERVICE_URL } from '../../../apis/endpoints';
-import { sortCities } from '../utils/countries';
+import { sortCities } from '../utils/countries/sortCities';
 import { fetchWithRetries } from './BaseService';
 
 interface Transport {
