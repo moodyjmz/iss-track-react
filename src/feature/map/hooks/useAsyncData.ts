@@ -3,7 +3,7 @@ export type ApiArgs = {args:any, signal:AbortSignal}|undefined;
 
 export type ApiFetchFunction = ({}: ApiArgs) => Promise<any>;
 
-export function useAsyncData(promiseFn: ApiFetchFunction, args:any): Promise<any>|null {
+export function useAsyncData(promiseFn: ApiFetchFunction, args?:any): Promise<any>|null {
     const [dataPromise, setdataPromise] = useState<Promise<any>|null>(null);
     const abortController = useRef<AbortController|null>(null);
 

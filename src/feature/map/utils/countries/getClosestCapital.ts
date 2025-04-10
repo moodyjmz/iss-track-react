@@ -1,24 +1,26 @@
-import { getDistance } from 'geolib';
+import { getClosestCapital } from '../utils/countries';
+
+import { Country } from '../../defs/country';
+import { Coordinates } from '../../defs/coordinates';
+import { getClosestCountry } from './getClosestCountry';
 
 
-export function getClosestCapital(countries, lat, lng) {
-  let closestCountryIndex;
-  let closestDistance;
 
-  countries.forEach((country, index) => {
-    if (country.latlng[0]) {
-      let distance = getDistance(
-        { latitude: country.latlng[0], longitude: country.latlng[1] },
-        { latitude: lat, longitude: lng }
-      );
-      if (closestCountryIndex === undefined
-        || (distance < closestDistance)) {
-        closestCountryIndex = index;
-        closestDistance = distance;
-      }
-    }
+interface CapitalProps {
+  position: Coordinates | null;
+  countries: Country[] | null;
+}
 
-  });
-  return closestCountryIndex && countries[closestCountryIndex];
+export function getClosestCapital({ position, countries }: CapitalProps): string | undefined {
+  if (position && countries) {
+    const closestCity = getClosestCountry(
+      countries,
+      position.latitude,
+      position.longitude
+    );
 
+    return closestCity?.capital;
+  }
+
+  return undefined;
 }

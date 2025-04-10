@@ -1,8 +1,8 @@
-import { getClosestCapital } from '../utils/countries';
+import { getClosestCountry } from '../utils/countries';
 export function useGetClosestCapital({ position, countries }) {
     let closestCityName;
     if (position && position.latitude && countries) {
-        const closestCity = getClosestCapital
+        const closestCity = getClosestCountry
             (
                 countries,
                 position.latitude,
