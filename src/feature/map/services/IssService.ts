@@ -35,10 +35,6 @@ export function buildFutureUrl(lat: number, lon: number): string {
   return futureUrl;
 }
 
-export function positionFutureList(selectedCity: Position): string {
-  return buildFutureUrl(selectedCity.latlng[0], selectedCity.latlng[1]);
-}
-
 export function fetchFuturePositionForLocation(opts: FetchFuturePositionOptions): Promise<any> | undefined {
   if (!opts.args || !opts.args.latlng) {
     return;

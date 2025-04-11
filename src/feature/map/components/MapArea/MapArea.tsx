@@ -5,7 +5,6 @@ import { fetchCurrentPosition } from '../../services/IssService';
 import Position from '../Position';
 import { usePolling } from '../../hooks/usePolling';
 import ClosestCapital from '../ClosestCity';
-import { logger } from '../../utils/logger';
 import Loader from '../Loader/Loader';
 import L from 'leaflet';
 import iss from './iss.png';

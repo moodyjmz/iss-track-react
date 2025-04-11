@@ -9,14 +9,13 @@ interface IssPosition {
     iss_position?: IssPosition;
   }
   
-  export function getLocationCoordinates(res: Response): Coordinates|undefined {
-    const coords: Coordinates|undefined = {};
-    
-    if (res.iss_position) {
-      coords.longitude = Number(res.iss_position.longitude);
-      coords.latitude = Number(res.iss_position.latitude);
+  export function getLocationCoordinates(res: Response): Coordinates|undefined {    
+    if (!res.iss_position) {
+      return;
     }
-  
-    return coords;
+    return {
+      longitude: parseInt(res.iss_position.longitude, 10),
+      latitude: parseInt(res.iss_position.latitude, 10)
+     }
   }
   

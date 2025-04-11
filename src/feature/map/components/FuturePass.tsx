@@ -22,12 +22,11 @@ export default function FuturePass({ countries }: FuturePassProps): JSX.Element 
         setSelectedCountryIndex(newIndex);
         selectedCity.current = getCityFromId(countries, newIndex);
     }, [countries]);
-
     return (
         <div>
             <select onChange={handleCountryChange} value={selectedCountryIndex}>
                 {countries.map((country, index) => (
-                    <option key={country.id} value={index}>
+                    <option key={index} value={index}>
                         {country.capital}
                     </option>
                 ))}
