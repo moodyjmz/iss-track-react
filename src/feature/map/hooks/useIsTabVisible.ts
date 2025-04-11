@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import { logger } from '../utils/logger';
 
-export function useIsTabVisible() {
-    const [isVisible, setIsVisible] = useState(true);
+export function useIsTabVisible(): boolean {
+    const [isVisible, setIsVisible] = useState<boolean>(true);
+
     useEffect(() => {
-
         const controller = new AbortController();
-
         const { signal } = controller;
 
         const handleVisibilityChange = () => {
@@ -20,7 +19,9 @@ export function useIsTabVisible() {
         };
 
         document.addEventListener('visibilitychange', handleVisibilityChange, { signal });
-        return (() => controller.abort());
+
+        return () => controller.abort();
     }, []);
+
     return isVisible;
 }

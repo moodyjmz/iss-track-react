@@ -3,7 +3,8 @@ class Logger {
     constructor(levels = {}) {
         for (const key of this.logTypes) {
                 this[key] = levels[key] && console[key] ? console[key].bind(console) : this.empty;
-          }
+          };
+      this.error = undefined;
     }
     empty() {}
 }
