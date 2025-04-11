@@ -1,30 +1,21 @@
-type LogLevel = 'error' | 'warn' | 'log' | 'info';
+const logLevels = ['info', 'warn', 'error', 'debug', 'log'] as const;
+type LogLevel = typeof logLevels[number];
 
-class Logger {
-    private logTypes: LogLevel[] = ['error', 'warn', 'log', 'info'];
-
-    constructor(levels: Partial<Record<LogLevel, boolean>> = {}) {
-        this.logTypes.forEach((type) => {
-            (this as any)[type] = levels[type] && console[type]
-                ? console[type].bind(console)
-                : this.empty;
-        });
-    }
-
-    private empty(): void {
-        // No operation
-    }
-}
-
-const devLogLevels: Partial<Record<LogLevel, boolean>> = {
-    error: true,
-    warn: true,
-    log: true,
-    info: true,
+type Logger = {
+  [K in LogLevel]: (...args: unknown[]) => void;
 };
 
-const prodLogLevels: Partial<Record<LogLevel, boolean>> = {};
+const isProduction = process.env.PROD === 'production';
 
-const LOG_LEVELS = process.env.REACT_APP_APP_ENV === 'production' ? prodLogLevels : devLogLevels;
+export const logger = logLevels.reduce((methods, level) => {
+  const method = level in console ? level : 'log';
 
-export const logger = new Logger(LOG_LEVELS);
+  methods[level] = (...args: unknown[]) => {
+    if (isProduction && level !== 'error') return;
+
+      console[method].bind(console)(...args);
+      // option here to log somewhere else in prod
+  };
+
+  return methods;
+}, {} as Logger);
