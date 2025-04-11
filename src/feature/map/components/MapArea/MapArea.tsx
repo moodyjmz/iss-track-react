@@ -16,6 +16,7 @@ const issIcon = new L.Icon({
     popupAnchor: [-0, -0],
     iconSize: [64, 33],
 });
+
 const zoom = 5;
 
 function DisplayPosition({ map, position }) {
@@ -34,7 +35,7 @@ function DisplayPosition({ map, position }) {
 function MapContainerWrapper({position, setMap, loadCallback}) {
     const handleLoad = useCallback(() => {
         loadCallback && loadCallback(true);
-    })
+    }, [loadCallback]);
     return (<MapContainer
         center={[position.latitude, position.longitude]}
         zoom={zoom}
