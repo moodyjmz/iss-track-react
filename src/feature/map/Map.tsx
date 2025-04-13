@@ -1,29 +1,9 @@
-import MapArea from './components/MapArea/MapArea';
-import FuturePass from './components/FuturePass';
 import { use, Suspense, JSX } from 'react';
 import { fetchCountries } from './services/CountriesService';
 import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
-import Loader from './components/Loader/Loader';
 import { useAsyncData } from './hooks/useAsyncData';
 import './map.css';
-
-interface MapWrapperProps {
-  countriesPromise: Promise<any>;
-}
-
-function MapWrapper({ countriesPromise }: MapWrapperProps): JSX.Element {
-  const countries = use(countriesPromise);
-  return (
-    <div className="app-inner">
-      <MapArea countries={countries} />
-      <div className="future-wrapper col">
-        <Suspense fallback={<Loader />}>
-          <FuturePass countries={countries} />
-        </Suspense>
-      </div>
-    </div>
-  );
-}
+import { MapWrapper } from './components/MapWrapper';
 
 function fallbackRender({ error, resetErrorBoundary }: FallbackProps): JSX.Element {
     return (
