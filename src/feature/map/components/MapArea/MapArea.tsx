@@ -9,6 +9,7 @@ import Loader from '../Loader/Loader';
 import L from 'leaflet';
 import iss from './iss.png';
 import { useIsTabVisible } from '../../hooks/useIsTabVisible';
+import { CountriesContext } from '../../context/countries';
 
 const issIcon = new L.Icon({
     iconUrl: iss,
@@ -51,10 +52,11 @@ function MapContainerWrapper({position, setMap, loadCallback}) {
     </MapContainer>);
 }
 
-function MapInner({ countries, currentPositionPromise, mapReady }) {
+function MapInner({ currentPositionPromise, mapReady }) {
     const position = use(currentPositionPromise);
     const [map, setMap] = useState(null);
-
+    const countriesPromise = use(CountriesContext);
+    const countries = use(countriesPromise);
     const displayMap = useMemo(
         () => (
             position && <MapContainerWrapper setMap={setMap} loadCallback={mapReady} position={position}></MapContainerWrapper>
@@ -74,13 +76,13 @@ function MapInner({ countries, currentPositionPromise, mapReady }) {
     )
 }
 
-export default function MapArea({ countries }) {
+export default function MapArea() {
     const currentPositionPromise = usePolling(fetchCurrentPosition, useIsTabVisible());
     const [mapReady, setMapReady] = useState(false);
     return (
         <div className='map-wrapper col'>
             {!mapReady && <Loader />}
-            {currentPositionPromise && countries && <MapInner mapReady={setMapReady} countries={countries} currentPositionPromise={currentPositionPromise} />}
+            {currentPositionPromise && <MapInner mapReady={setMapReady} currentPositionPromise={currentPositionPromise} />}
         </div>
 
     )
