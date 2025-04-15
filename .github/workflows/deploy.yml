@@ -29,8 +29,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - run: npm run test
       - run: npm run build
+        env:
+          VITE_COUNTRIES_SERVICE_URL: ${{ vars.VITE_COUNTRIES_SERVICE_URL }}
+          VITE_ISS_CURRENT_URL: ${{ vars.VITE_ISS_CURRENT_URL }}
+          VITE_ISS_PASSES_URL: ${{ vars.VITE_ISS_PASSES_URL }}
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
