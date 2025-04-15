@@ -10,27 +10,22 @@ import L from 'leaflet';
 import iss from './iss.png';
 import { useIsTabVisible } from '../../hooks/useIsTabVisible';
 import { Country } from '../../defs/country';
-
-// Define types for Position
-interface PositionType {
-    latitude: number;
-    longitude: number;
-}
+import { Coordinates } from '../../defs/coordinates';
 
 interface DisplayPositionProps {
     map: L.Map;
-    position: PositionType;
+    position: Coordinates;
 }
 
 interface MapContainerWrapperProps {
-    position: PositionType;
+    position: Coordinates;
     setMap: React.Dispatch<React.SetStateAction<L.Map | null>>;
     loadCallback?: (ready: boolean) => void;
 }
 
 interface MapInnerProps {
     countries: Country[]; 
-    currentPositionPromise: Promise<PositionType>;
+    currentPositionPromise: Promise<Coordinates>;
     mapReady: (ready: boolean) => void;
 }
 

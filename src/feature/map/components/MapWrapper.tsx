@@ -2,9 +2,10 @@ import { use, Suspense, JSX } from 'react';
 import Loader from './Loader/Loader';
 import FuturePass from './FuturePass';
 import MapArea from './MapArea/MapArea';
+import { Country } from '../defs/country';
 
 interface MapWrapperProps {
-  countriesPromise: Promise<any>;
+  countriesPromise: Promise<Country[]>;
 }
 
 export function MapWrapper({ countriesPromise }: MapWrapperProps): JSX.Element {
