@@ -29,9 +29,15 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-
+          
+      - run: |
+          echo "VITE_COUNTRIES_SERVICE_URL : $VITE_COUNTRIES_SERVICE_URL"
+          echo "VITE_ISS_CURRENT_URL : VITE_ISS_CURRENT_URL"
+          echo "VITE_ISS_PASSES_URL : $VITE_ISS_PASSES_URL"
+          
       - run: npm install
       - run: npm run build
+
         env:
           VITE_COUNTRIES_SERVICE_URL: ${{ vars.VITE_COUNTRIES_SERVICE_URL }}
           VITE_ISS_CURRENT_URL: ${{ vars.VITE_ISS_CURRENT_URL }}
