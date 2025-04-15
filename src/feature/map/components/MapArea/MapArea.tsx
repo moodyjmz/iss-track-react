@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo, use, Suspense, useCallback } from "react";
+import React, { useState, useEffect, useMemo, use, useCallback } from "react";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { fetchCurrentPosition } from '../../services/IssService';
