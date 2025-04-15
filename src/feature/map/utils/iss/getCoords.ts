@@ -4,18 +4,12 @@ interface IssPosition {
     longitude: string;
     latitude: string;
   }
+
   
-  interface Response {
-    iss_position?: IssPosition;
-  }
-  
-  export function getLocationCoordinates(res: Response): Coordinates|undefined {    
-    if (!res.iss_position) {
-      return;
-    }
+  export function getLocationCoordinates(res: IssPosition): Coordinates {    
     return {
-      longitude: parseInt(res.iss_position.longitude, 10),
-      latitude: parseInt(res.iss_position.latitude, 10)
+      longitude: parseInt(res.longitude, 10),
+      latitude: parseInt(res.latitude, 10)
      }
   }
   
