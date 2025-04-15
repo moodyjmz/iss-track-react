@@ -32,9 +32,8 @@ jobs:
           
       - run: |
           echo "VITE_COUNTRIES_SERVICE_URL : $VITE_COUNTRIES_SERVICE_URL"
-          echo "VITE_ISS_CURRENT_URL : VITE_ISS_CURRENT_URL"
+          echo "VITE_ISS_CURRENT_URL : $VITE_ISS_CURRENT_URL"
           echo "VITE_ISS_PASSES_URL : $VITE_ISS_PASSES_URL"
-          
       - run: npm install
       - run: npm run build
 
