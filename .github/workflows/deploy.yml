@@ -5,9 +5,11 @@ on:
     branches:
       - main
   pull_request:
-
+    types:
+      - closed
 jobs:
   deploy:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-22.04
     permissions:
       contents: write
@@ -29,6 +31,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
+      - run: npm install
       - run: npm run build
         env:
           VITE_COUNTRIES_SERVICE_URL: ${{ vars.VITE_COUNTRIES_SERVICE_URL }}
