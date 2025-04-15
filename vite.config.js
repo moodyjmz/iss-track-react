@@ -10,5 +10,7 @@ export default defineConfig(() => {
             'process.env': {},
         },
         plugins: [react()],
+        base: '/iss-track-react/'
+
     };
 });
