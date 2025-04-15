@@ -6,13 +6,17 @@ This is very much a first version, with a lot missing.
 
 Things to consider:
 
-- Redo using TS - useful for the APIs
+- ~~Redo using TS - useful for the APIs~~
+- ~~Update to Vite~~
 - Remove console logging (!)
-- Remove dead code
+- ~~Remove dead code~~
 - Consider how to make API calls more consistent
-- More loading handling - hook into leaflet API eg
+- ~~More loading handling - hook into leaflet API eg~~
 - Tests
 - SWR approaches
+- Add line tracking for history - toggable
+- Add live site to github pages and add actions
+- Add extra map when choosing future viewing and jump to location
 
 To use:
 
