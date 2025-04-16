@@ -1,6 +1,6 @@
 import { ISS_CURRENT_URL, ISS_FUTURE_URL } from '../../../apis/endpoints';
+import { ISSStats } from '../defs/issStats';
 import { calcRiseTime } from '../utils/iss/calcRiseTime';
-import { getLocationCoordinates } from '../utils/iss/getCoords';
 import { fetchWithRetries } from './BaseService';
 
 interface Transport {
@@ -16,9 +16,9 @@ interface FetchFuturePositionOptions {
   transport?: Transport;
 }
 
-export function fetchCurrentPosition(transport: Transport = {}): Promise<any> {
+export function fetchCurrentPosition(transport: Transport = {}): Promise<ISSStats> {
   return fetchWithRetries(
-    { url: ISS_CURRENT_URL, transport, callback: getLocationCoordinates },
+    { url: ISS_CURRENT_URL, transport },
     3
   );
 }
