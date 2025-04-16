@@ -1,15 +1,11 @@
 import { Coordinates } from '../../defs/coordinates';
-
-interface IssPosition {
-    longitude: string;
-    latitude: string;
-  }
+import { ISSStats } from '../../defs/issStats';
 
   
-  export function getLocationCoordinates(res: IssPosition): Coordinates {    
+  export function getLocationCoordinates(res: ISSStats): Coordinates {    
     return {
-      longitude: parseInt(res.longitude, 10),
-      latitude: parseInt(res.latitude, 10)
+      longitude: res.longitude,
+      latitude: res.latitude
      }
   }
   
