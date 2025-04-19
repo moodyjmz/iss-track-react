@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, use, useCallback } from "react";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { fetchCurrentPosition } from '../../services/IssService';
+import { fetchCurrentTelemetry } from '../../services/IssService';
 import Position from '../Position';
 import { usePolling } from '../../hooks/usePolling';
 import ClosestCapital from '../ClosestCity';
@@ -11,6 +11,8 @@ import iss from './iss.png';
 import { useIsTabVisible } from '../../hooks/useIsTabVisible';
 import { Country } from '../../defs/country';
 import { Coordinates } from '../../defs/coordinates';
+import { getClosestCapital } from '../../utils/countries/getClosestCapital';
+import ValueDisplay from '../ValueDisplay';
 
 interface DisplayPositionProps {
     map: L.Map;
@@ -25,7 +27,7 @@ interface MapContainerWrapperProps {
 
 interface MapInnerProps {
     countries: Country[]; 
-    currentPositionPromise: Promise<Coordinates>;
+    currentTelemetryPromise: Promise<IS>;
     mapReady: (ready: boolean) => void;
 }
 
@@ -78,8 +80,10 @@ function MapContainerWrapper({ position, setMap, loadCallback }: MapContainerWra
     );
 }
 
-function MapInner({ countries, currentPositionPromise, mapReady }: MapInnerProps) {
-    const position = use(currentPositionPromise);
+function MapInner({ countries, currentTelemetryPromise, mapReady }: MapInnerProps) {
+    const position = use(currentTelemetryPromise);
+    const closestCityName = getClosestCapital({ countries, position });
+    console.log(closestCityName);
     const [map, setMap] = useState<L.Map | null>(null);
 
     const displayMap = useMemo(
@@ -93,20 +97,21 @@ function MapInner({ countries, currentPositionPromise, mapReady }: MapInnerProps
         <>
             {map && <DisplayPosition map={map} position={position} />}
             {displayMap}
-            <Position position={position}></Position>
+            <ValueDisplay value={position.latitude} title='Latitude' />
+            <ValueDisplay value={position.longitude} title='Longitude' />
             <ClosestCapital countries={countries} position={position} />
         </>
     );
 }
 
 export default function MapArea({ countries }: MapAreaProps) {
-    const currentPositionPromise = usePolling(fetchCurrentPosition, useIsTabVisible());
+    const currentTelemetryPromise = usePolling(fetchCurrentTelemetry, useIsTabVisible());
     const [mapReady, setMapReady] = useState(false);
 
     return (
         <div className='map-wrapper col'>
             {!mapReady && <Loader />}
-            {currentPositionPromise && countries && <MapInner mapReady={setMapReady} countries={countries} currentPositionPromise={currentPositionPromise} />}
+            {currentTelemetryPromise && countries && <MapInner mapReady={setMapReady} countries={countries} currentTelemetryPromise={currentTelemetryPromise} />}
         </div>
     );
 }
