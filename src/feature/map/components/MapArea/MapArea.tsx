@@ -13,6 +13,8 @@ import { Country } from '../../defs/country';
 import { Coordinates } from '../../defs/coordinates';
 import { getClosestCapital } from '../../utils/countries/getClosestCapital';
 import ValueDisplay from '../ValueDisplay';
+import { ISSStats } from '../../defs/ISSStats';
+import speedFromUnit from '../../utils/iss/speedFromUnit';
 
 interface DisplayPositionProps {
     map: L.Map;
@@ -27,7 +29,7 @@ interface MapContainerWrapperProps {
 
 interface MapInnerProps {
     countries: Country[]; 
-    currentTelemetryPromise: Promise<IS>;
+    currentTelemetryPromise: Promise<ISSStats>;
     mapReady: (ready: boolean) => void;
 }
 
@@ -81,25 +83,26 @@ function MapContainerWrapper({ position, setMap, loadCallback }: MapContainerWra
 }
 
 function MapInner({ countries, currentTelemetryPromise, mapReady }: MapInnerProps) {
-    const position = use(currentTelemetryPromise);
-    const closestCityName = getClosestCapital({ countries, position });
-    console.log(closestCityName);
+    const telemetry = use(currentTelemetryPromise);
+    const closestCityName = getClosestCapital({ countries, position: telemetry });
+    const velocity = `${telemetry.velocity}${speedFromUnit(telemetry.units)}`;
     const [map, setMap] = useState<L.Map | null>(null);
 
     const displayMap = useMemo(
         () => (
-            position && <MapContainerWrapper setMap={setMap} loadCallback={mapReady} position={position}></MapContainerWrapper>
+            telemetry && <MapContainerWrapper setMap={setMap} loadCallback={mapReady} position={telemetry}></MapContainerWrapper>
         ),
-        [position, mapReady]
+        [telemetry, mapReady]
     );
 
     return (
         <>
-            {map && <DisplayPosition map={map} position={position} />}
+            {map && <DisplayPosition map={map} position={telemetry} />}
             {displayMap}
-            <ValueDisplay value={position.latitude} title='Latitude' />
-            <ValueDisplay value={position.longitude} title='Longitude' />
-            <ClosestCapital countries={countries} position={position} />
+            <ValueDisplay value={telemetry.latitude} title='Latitude' />
+            <ValueDisplay value={telemetry.longitude} title='Longitude' />
+            <ValueDisplay value={velocity} title='Velocity' />
+            {closestCityName && <ValueDisplay value={closestCityName} title='Closest Capital' />}
         </>
     );
 }
