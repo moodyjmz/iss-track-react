@@ -2,13 +2,11 @@ import React, { useState, useEffect, useMemo, use, useCallback } from "react";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { fetchCurrentTelemetry } from '../../services/IssService';
-import Position from '../Position';
 import { usePolling } from '../../hooks/usePolling';
-import ClosestCapital from '../ClosestCity';
 import Loader from '../Loader/Loader';
 import L from 'leaflet';
 import iss from './iss.png';
-import { useIsTabVisible } from '../../hooks/useIsTabVisible';
+import { useIsPageFocused } from '../../hooks/useIsPageFocused';
 import { Country } from '../../defs/country';
 import { Coordinates } from '../../defs/coordinates';
 import { getClosestCapital } from '../../utils/countries/getClosestCapital';
@@ -108,11 +106,14 @@ function MapInner({ countries, currentTelemetryPromise, mapReady }: MapInnerProp
 }
 
 export default function MapArea({ countries }: MapAreaProps) {
-    const currentTelemetryPromise = usePolling(fetchCurrentTelemetry, useIsTabVisible());
+    const isPageActive = useIsPageFocused();
+    const currentTelemetryPromise = usePolling(fetchCurrentTelemetry, isPageActive);
     const [mapReady, setMapReady] = useState(false);
-
+    const activeClassName = isPageActive ? 'active' : 'inactive';
     return (
+        
         <div className='map-wrapper col'>
+            {!isPageActive && <div className='inactive'>off</div>}
             {!mapReady && <Loader />}
             {currentTelemetryPromise && countries && <MapInner mapReady={setMapReady} countries={countries} currentTelemetryPromise={currentTelemetryPromise} />}
         </div>
