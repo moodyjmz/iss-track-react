@@ -1,8 +1,8 @@
 import { logger } from '../utils/logger';
 
 interface FetchOptions {
-  transport?: RequestInit; // Represents fetch options like headers, method, etc.
-  callback?: (response: any) => any; // Callback function to process the response
+  transport?: RequestInit; 
+  callback?: (response: any) => any; 
 }
 
 export interface FetchResult {
@@ -11,7 +11,6 @@ export interface FetchResult {
 }
 
 export function fetchWithRetries(opts: FetchOptions & { url: string }, retries = 0): Promise<any> {
-  console.log(opts);
   return fetch(opts.url, opts.transport || {})
     .then((res) => {
       if (res.ok) {
