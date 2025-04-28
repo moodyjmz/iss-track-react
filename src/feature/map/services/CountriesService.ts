@@ -1,15 +1,20 @@
 import { COUNTRIES_SERVICE_URL } from '../../../apis/endpoints';
 import { sortCities } from '../utils/countries/sortCities';
 import { fetchWithRetries } from './BaseService';
+import { ApiArgs } from '../hooks/useAsyncData';
 
 interface Transport {
   [key: string]: any; 
 }
 
-// Define the return type if fetchWithRetries has a specific return value
-export function fetchCountries(transport: Transport = {}, retries: number = 3): Promise<any> {
+export function fetchCountries(opts?: ApiArgs): Promise<any> {
+  const transport = opts?.args?.transport || {};
+  if (opts?.signal) {
+    transport.signal = opts.signal;
+  }
+  
   return fetchWithRetries(
     { url: COUNTRIES_SERVICE_URL, callback: sortCities, transport },
-    retries
+    3
   );
 }
