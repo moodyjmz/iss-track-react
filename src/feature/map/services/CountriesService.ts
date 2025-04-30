@@ -3,10 +3,6 @@ import { sortCities } from '../utils/countries/sortCities';
 import { fetchWithRetries } from './BaseService';
 import { ApiArgs } from '../hooks/useAsyncData';
 
-interface Transport {
-  [key: string]: any; 
-}
-
 export function fetchCountries(opts?: ApiArgs): Promise<any> {
   const transport = opts?.args?.transport || {};
   if (opts?.signal) {

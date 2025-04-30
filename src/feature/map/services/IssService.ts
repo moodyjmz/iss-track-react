@@ -3,10 +3,6 @@ import { ISSStats } from '../defs/ISSStats';
 import { calcRiseTime } from '../utils/iss/calcRiseTime';
 import { fetchWithRetries } from './BaseService';
 
-interface Transport {
-  [key: string]: any; 
-}
-
 interface Position {
   latlng: [number, number];
 }

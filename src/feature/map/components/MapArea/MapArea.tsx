@@ -13,6 +13,7 @@ import { getClosestCapital } from '../../utils/countries/getClosestCapital';
 import ValueDisplay from '../ValueDisplay';
 import { ISSStats } from '../../defs/ISSStats';
 import speedFromUnit from '../../utils/iss/speedFromUnit';
+import { WindowStateContext } from '../../context/WindowState';
 
 interface DisplayPositionProps {
     map: L.Map;
@@ -106,14 +107,15 @@ function MapInner({ countries, currentTelemetryPromise, mapReady }: MapInnerProp
 }
 
 export default function MapArea({ countries }: MapAreaProps) {
-    const isPageActive = useIsPageFocused();
-    const currentTelemetryPromise = usePolling(fetchCurrentTelemetry, isPageActive);
+    const windowStateContext = use(WindowStateContext);
+    // console.log(WindowStateContext)
+    const {isActive} = windowStateContext;
+    console.log('isPageActive', isActive);
+    const currentTelemetryPromise = usePolling(fetchCurrentTelemetry, isActive);
     const [mapReady, setMapReady] = useState(false);
-    const activeClassName = isPageActive ? 'active' : 'inactive';
     return (
         
         <div className='map-wrapper col'>
-            {!isPageActive && <div className='inactive'>off</div>}
             {!mapReady && <Loader />}
             {currentTelemetryPromise && countries && <MapInner mapReady={setMapReady} countries={countries} currentTelemetryPromise={currentTelemetryPromise} />}
         </div>

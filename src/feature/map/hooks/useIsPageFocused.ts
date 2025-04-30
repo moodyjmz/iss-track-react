@@ -8,6 +8,7 @@ export function useIsPageFocused(): boolean {
         const { signal } = controller;
 
         const handleVisibilityChange = () => {
+            console.log('document.hasFocus()', document.hasFocus());
             setIsVisible(document.hasFocus());
         };
 
@@ -16,6 +17,6 @@ export function useIsPageFocused(): boolean {
 
         return () => controller.abort();
     }, []);
-
+    console.log('isVisible', isVisible);
     return isVisible;
 }
