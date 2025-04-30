@@ -4,7 +4,7 @@ import { fetchWithRetries } from './BaseService';
 import { ApiArgs } from '../hooks/useAsyncData';
 
 export function fetchCountries(opts?: ApiArgs): Promise<any> {
-  const transport = opts?.args?.transport || {};
+const transport = opts?.args?.transport || {};
   if (opts?.signal) {
     transport.signal = opts.signal;
   }
