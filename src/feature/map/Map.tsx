@@ -39,7 +39,11 @@ export default function Map(): JSX.Element {
       >
         {countriesPromise && <MapWrapper countriesPromise={countriesPromise} />}
       </ErrorBoundary>
-      <div className={activeClassName}>Polling Suspended</div>
+      <div className={activeClassName}>
+        <div className='inactive-message'>
+          Polling Suspended
+        </div>
+      </div>
 
     </div>
 
