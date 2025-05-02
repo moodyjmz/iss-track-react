@@ -22,6 +22,7 @@ Things to consider:
 - [ ] Add a number spinner/changer for the numbers
 - [ ] Similar for the text, typist like feature
 - [ ] Tidy up code
+- [ ] Make future dropdown searchable
 
 `npm i`
 
