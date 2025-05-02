@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 
-export function useIsPageFocused(): boolean {
+export function useIsPageFocused(callback: (isVisible: boolean) => void): boolean {
     const [isVisible, setIsVisible] = useState<boolean>(true);
+
+    useEffect(() => {
+        // callback && callback(isVisible);
+    }, [isVisible]);
 
     useEffect(() => {
         const controller = new AbortController();

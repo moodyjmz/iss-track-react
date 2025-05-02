@@ -1,0 +1,68 @@
+.grid {
+    display: grid;
+    grid-template-columns: var(--left, 2fr) var(--right, 2fr);
+    grid-template-rows: var(--top, 3fr) var(--bottom, 3fr);
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+    transition: all 0.25s ease;
+    width: 100%;
+    height: 200px;
+    margin-top: 5px;
+
+    align-items: stretch;
+    justify-items: stretch;
+}
+
+.grid:has(.left:hover) {
+    --left: 3fr;
+    --right: 1fr;
+}
+
+.grid:has(.right:hover) {
+    --right: 3fr;
+    --left: 1fr;
+}
+
+.grid:has(.top:hover) {
+    --top: 3fr;
+    --bottom: 2fr;
+}
+
+.grid:has(.bottom:hover) {
+    --bottom: 3fr;
+    --top: 2fr;
+}
+
+.content-wrapper {
+    container-type: size;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: stretch;
+    justify-content: stretch;
+    flex: 1;
+}
+.content {
+    color: #fff;
+    /* margin: 5px; */
+    padding: 10px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    background: var(--content-bg-color);
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    flex: 1;
+    flex-wrap: nowrap;
+    flex-direction: column;
+}
+h6 {
+    display: inline-block;
+    font-size: clamp(1rem, min(6cqi, 6cqb) + 0.5rem, 20rem);
+    margin: 0;
+}
+
+.content p {
+    font-size: clamp(0.875rem, min(2cqi, 2cqb) + 0.5rem, 6rem);
+    margin: 0;
+}

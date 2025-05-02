@@ -4,7 +4,7 @@ import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 import { useAsyncData } from './hooks/useAsyncData';
 import './map.css';
 import { MapWrapper } from './components/MapWrapper';
-import { WindowStateContext, WindowStateProvider } from './context/WindowState';
+import { WindowStateContext } from './context/WindowState';
 import { useIsPageFocused } from './hooks/useIsPageFocused';
 
 function fallbackRender({ error, resetErrorBoundary }: FallbackProps): JSX.Element {
@@ -18,14 +18,13 @@ function fallbackRender({ error, resetErrorBoundary }: FallbackProps): JSX.Eleme
 }
 
 export default function Map(): JSX.Element {
-  const isPageActive = useIsPageFocused();
+
   const windowStateContext = use(WindowStateContext);
+  const { isActive, setIsActive } = windowStateContext;
+  useIsPageFocused(setIsActive);
   const countriesPromise = useAsyncData(fetchCountries);
 
-  const { isActive, setIsActive } = windowStateContext;
-  useEffect(() => {
-    setIsActive(isPageActive);
-  });
+
   const activeClassName = 'out-of-focus ' + (isActive ? 'active' : 'inactive');
   console.log(activeClassName);
   return (
