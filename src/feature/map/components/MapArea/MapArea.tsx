@@ -108,9 +108,7 @@ function MapInner({ countries, currentTelemetryPromise, mapReady }: MapInnerProp
 
 export default function MapArea({ countries }: MapAreaProps) {
     const windowStateContext = use(WindowStateContext);
-    // console.log(WindowStateContext)
     const {isActive} = windowStateContext;
-    console.log('isPageActive', isActive);
     const currentTelemetryPromise = usePolling(fetchCurrentTelemetry, isActive);
     const [mapReady, setMapReady] = useState(false);
     return (
