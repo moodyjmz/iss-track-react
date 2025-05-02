@@ -1,12 +1,14 @@
-import { use, Suspense, JSX } from 'react';
+import { use, Suspense, JSX, useEffect } from 'react';
 import { fetchCountries } from './services/CountriesService';
 import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 import { useAsyncData } from './hooks/useAsyncData';
 import './map.css';
 import { MapWrapper } from './components/MapWrapper';
+import { WindowStateContext } from './context/WindowState';
+import { useIsPageFocused } from './hooks/useIsPageFocused';
 
 function fallbackRender({ error, resetErrorBoundary }: FallbackProps): JSX.Element {
-    return (
+  return (
     <div role="alert">
       <p>Something went wrong:</p>
       <pre style={{ color: 'red' }}>{error.message}</pre>
@@ -16,15 +18,33 @@ function fallbackRender({ error, resetErrorBoundary }: FallbackProps): JSX.Eleme
 }
 
 export default function Map(): JSX.Element {
+
+  const windowStateContext = use(WindowStateContext);
+  const { isActive, setIsActive } = windowStateContext;
+  useIsPageFocused(setIsActive);
   const countriesPromise = useAsyncData(fetchCountries);
+
+
+  const activeClassName = 'out-of-focus ' + (isActive ? 'active' : 'inactive');
+  console.log(activeClassName);
   return (
-    <ErrorBoundary
-      fallbackRender={fallbackRender}
-      onReset={(details) => {
-        console.warn(details);
-      }}
-    >
-      {countriesPromise && <MapWrapper countriesPromise={countriesPromise} />}
-    </ErrorBoundary>
+    <div>
+
+      <ErrorBoundary
+        fallbackRender={fallbackRender}
+        onReset={(details) => {
+          console.warn(details);
+        }}
+      >
+        {countriesPromise && <MapWrapper countriesPromise={countriesPromise} />}
+      </ErrorBoundary>
+      <div className={activeClassName}>
+        <div className='inactive-message'>
+          Polling Suspended
+        </div>
+      </div>
+
+    </div>
+
   );
 }

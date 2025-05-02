@@ -1,16 +1,19 @@
 import React, { useState, useEffect, useMemo, use, useCallback } from "react";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { fetchCurrentPosition } from '../../services/IssService';
-import Position from '../Position';
+import { fetchCurrentTelemetry } from '../../services/IssService';
 import { usePolling } from '../../hooks/usePolling';
-import ClosestCapital from '../ClosestCity';
 import Loader from '../Loader/Loader';
 import L from 'leaflet';
 import iss from './iss.png';
-import { useIsTabVisible } from '../../hooks/useIsTabVisible';
+import { useIsPageFocused } from '../../hooks/useIsPageFocused';
 import { Country } from '../../defs/country';
 import { Coordinates } from '../../defs/coordinates';
+import { getClosestCapital } from '../../utils/countries/getClosestCapital';
+import ValueDisplay from '../ValueDisplay';
+import { ISSStats } from '../../defs/ISSStats';
+import speedFromUnit from '../../utils/iss/speedFromUnit';
+import { WindowStateContext } from '../../context/WindowState';
 
 interface DisplayPositionProps {
     map: L.Map;
@@ -24,14 +27,14 @@ interface MapContainerWrapperProps {
 }
 
 interface MapInnerProps {
-    countries: Country[]; 
-    currentPositionPromise: Promise<Coordinates>;
+    countries: Country[];
+    currentTelemetryPromise: Promise<ISSStats>;
     mapReady: (ready: boolean) => void;
 }
 
 // Define types for MapArea props
 interface MapAreaProps {
-    countries: Country[]; 
+    countries: Country[];
 }
 
 const issIcon = new L.Icon({
@@ -78,35 +81,69 @@ function MapContainerWrapper({ position, setMap, loadCallback }: MapContainerWra
     );
 }
 
-function MapInner({ countries, currentPositionPromise, mapReady }: MapInnerProps) {
-    const position = use(currentPositionPromise);
+function MapInner({ countries, currentTelemetryPromise, mapReady }: MapInnerProps) {
+    const telemetry = use(currentTelemetryPromise);
+    const closestCityName = getClosestCapital({ countries, position: telemetry });
+    const units = speedFromUnit(telemetry.units);
     const [map, setMap] = useState<L.Map | null>(null);
 
     const displayMap = useMemo(
         () => (
-            position && <MapContainerWrapper setMap={setMap} loadCallback={mapReady} position={position}></MapContainerWrapper>
+            telemetry && <MapContainerWrapper setMap={setMap} loadCallback={mapReady} position={telemetry}></MapContainerWrapper>
         ),
-        [position, mapReady]
+        [telemetry, mapReady]
     );
 
     return (
         <>
-            {map && <DisplayPosition map={map} position={position} />}
-            {displayMap}
-            <Position position={position}></Position>
-            <ClosestCapital countries={countries} position={position} />
+            {map && <DisplayPosition map={map} position={telemetry} />}
+            <div className='map-wrapper'>
+                {displayMap}
+            </div>
+            <div className='grid'>
+                <div className="item left top">
+                    <div className="content-wrapper">
+                        <div className="content">
+                            <ValueDisplay value={telemetry.latitude} title='Latitude' decimalPlaces={4} />
+                        </div>
+                    </div>
+                </div>
+                <div className="item right top">
+                    <div className="content-wrapper">
+                        <div className="content">
+                            <ValueDisplay value={telemetry.longitude} title='Longitude' decimalPlaces={4} />
+                        </div>
+                    </div>
+                </div>
+                <div className="item left bottom">
+                    <div className="content-wrapper">
+                        <div className="content">
+                            <ValueDisplay value={telemetry.velocity} title='Velocity' decimalPlaces={0} units={units} />
+                        </div>
+                    </div>
+                </div>
+                <div className="item right bottom">
+                    <div className="content-wrapper">
+                        <div className="content">
+                            {closestCityName && <ValueDisplay value={closestCityName} title='Closest Capital' />}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     );
 }
 
 export default function MapArea({ countries }: MapAreaProps) {
-    const currentPositionPromise = usePolling(fetchCurrentPosition, useIsTabVisible());
+    const windowStateContext = use(WindowStateContext);
+    const { isActive } = windowStateContext;
+    const currentTelemetryPromise = usePolling(fetchCurrentTelemetry, isActive);
     const [mapReady, setMapReady] = useState(false);
-
     return (
-        <div className='map-wrapper col'>
+
+        <div className='col'>
             {!mapReady && <Loader />}
-            {currentPositionPromise && countries && <MapInner mapReady={setMapReady} countries={countries} currentPositionPromise={currentPositionPromise} />}
+            {currentTelemetryPromise && countries && <MapInner mapReady={setMapReady} countries={countries} currentTelemetryPromise={currentTelemetryPromise} />}
         </div>
     );
 }

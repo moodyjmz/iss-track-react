@@ -6,34 +6,24 @@ This is very much a first version, with a lot missing.
 
 Things to consider:
 
-- ~~Redo using TS - useful for the APIs~~
-- ~~Update to Vite~~
-- Remove console logging (!)
-- ~~Remove dead code~~
-- Consider how to make API calls more consistent
-- ~~More loading handling - hook into leaflet API eg~~
-- Tests
-- SWR approaches
-- Add line tracking for history - toggable
-- Add live site to github pages and add actions
-- Add extra map when choosing future viewing and jump to location
-
-To use:
-
-Add an env file, eg
-
-```
-VITE_COUNTRIES_SERVICE_URL=./api/countries
-VITE_ISS_CURRENT_URL=http://api.open-notify.org/iss-now.json
-VITE_ISS_PASSES_URL=https://api.g7vrd.co.uk/v1/satellite-passes/25544/%lat%/%lon%.json?hours=12
-
-```
-
-> We could use REST countries, but we can avoid hammering their service as it is unlikely the city coords change
+- [x] Redo using TS - useful for the APIs
+- [x] Update to Vite~~
+- [ ] Remove console logging (!)
+- [x] Remove dead code
+- [x] Consider how to make API calls more consistent
+- [x] More loading handling - hook into leaflet API eg, turn off polling when page not active
+- [ ] Tests
+- [ ] SWR approaches
+- [ ] Add line tracking for history - toggable
+- [x] Add live site to github pages and add actions
+- [ ] Add extra map when choosing future viewing and jump to location
+- [x] Change telemetry display to be grid with hover effect
+- [ ] Make telemetry display look cooler
+- [ ] Add a number spinner/changer for the numbers
+- [ ] Similar for the text, typist like feature
+- [ ] Tidy up code
 
 `npm i`
-
-`npm run json`
 
 `npm run start`
 

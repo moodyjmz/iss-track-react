@@ -1,5 +1,5 @@
 import { Country } from '../../defs/country';
-import { Coordinates } from '../../defs/coordinates';
+import { ISSStats } from '../../defs/coordinates';
 import { getClosestCountry } from './getClosestCountry';
 
 interface CapitalProps {
