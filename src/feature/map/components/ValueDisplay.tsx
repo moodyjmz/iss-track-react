@@ -1,19 +1,28 @@
 interface ValueDisplayProps {
-    value: string|number;
+    value: string | number;
     title: string;
     decimalPlaces?: number;
-    units?: string;
+    unit?: string;
+    locale?: string;
 }
 
-export default function ValueDisplay({ value, title, decimalPlaces, units }: ValueDisplayProps) {
+export default function ValueDisplay({ value, title, decimalPlaces, unit, locale = 'en-GB' }: ValueDisplayProps) {
     let finalValue = value;
-    if(typeof decimalPlaces === 'number') {
-        console.log(value)
-        finalValue = new Number(value).toFixed(decimalPlaces);
+    let numberFormatOptions: Intl.NumberFormatOptions = {};
+    // type is string or number
+    if (typeof value === 'number') {
+        if (typeof decimalPlaces === 'number') {
+            numberFormatOptions.maximumFractionDigits = decimalPlaces;
+        }
+        if (unit) {
+            numberFormatOptions.style = 'unit';
+            numberFormatOptions.unit = unit;
+        }
+        finalValue = new Intl.NumberFormat(locale, numberFormatOptions).format(value);
+
     }
-    if(units) {
-        finalValue = finalValue + units;
-    }
+
+
     return (
         <div className='value-display'>
             <h6>{title}</h6>

@@ -84,9 +84,8 @@ function MapContainerWrapper({ position, setMap, loadCallback }: MapContainerWra
 function MapInner({ countries, currentTelemetryPromise, mapReady }: MapInnerProps) {
     const telemetry = use(currentTelemetryPromise);
     const closestCityName = getClosestCapital({ countries, position: telemetry });
-    const units = speedFromUnit(telemetry.units);
     const [map, setMap] = useState<L.Map | null>(null);
-
+    const unit = telemetry.units.slice(0, -1) + '-per-hour';
     const displayMap = useMemo(
         () => (
             telemetry && <MapContainerWrapper setMap={setMap} loadCallback={mapReady} position={telemetry}></MapContainerWrapper>
@@ -118,7 +117,7 @@ function MapInner({ countries, currentTelemetryPromise, mapReady }: MapInnerProp
                 <div className="item left bottom">
                     <div className="content-wrapper">
                         <div className="content">
-                            <ValueDisplay value={telemetry.velocity} title='Velocity' decimalPlaces={0} units={units} />
+                            <ValueDisplay value={telemetry.velocity} title='Velocity' decimalPlaces={0} unit={unit} />
                         </div>
                     </div>
                 </div>

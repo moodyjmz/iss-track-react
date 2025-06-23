@@ -57,12 +57,27 @@
     flex-direction: column;
 }
 h6 {
-    display: inline-block;
-    font-size: clamp(1rem, min(6cqi, 6cqb) + 0.5rem, 20rem);
+    font-size: clamp(1rem, min(5cqi, 15cqb) + 0.5rem, 20rem);
     margin: 0;
+    text-transform: uppercase;
 }
 
 .content p {
-    font-size: clamp(0.875rem, min(2cqi, 2cqb) + 0.5rem, 6rem);
+    font-size: clamp(0.5rem, min(1cqi, 5cqb) + 0.5rem, 6rem);
     margin: 0;
+}
+
+@container (min-width: 200px) {
+    h6 {
+        text-transform: capitalize;
+    }
+}
+
+@container (min-width: 500px) {
+    .short-form {
+        display: block;
+    }
+    .long-form {
+        display: none;
+    }
 }
