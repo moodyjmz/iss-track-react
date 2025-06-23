@@ -13,26 +13,6 @@
     justify-items: stretch;
 }
 
-.grid:has(.left:hover) {
-    --left: 3fr;
-    --right: 1fr;
-}
-
-.grid:has(.right:hover) {
-    --right: 3fr;
-    --left: 1fr;
-}
-
-.grid:has(.top:hover) {
-    --top: 3fr;
-    --bottom: 2fr;
-}
-
-.grid:has(.bottom:hover) {
-    --bottom: 3fr;
-    --top: 2fr;
-}
-
 .content-wrapper {
     container-type: size;
     display: flex;
