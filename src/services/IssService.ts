@@ -1,5 +1,5 @@
-import { ISS_CURRENT_URL, ISS_FUTURE_URL } from '../../../apis/endpoints';
-import { ISSStats } from '../defs/ISSStats';
+import { ISS_CURRENT_URL, ISS_FUTURE_URL } from '../apis/endpoints';
+import { ISSStats } from '../types/ISSStats';
 import { ApiArgs } from '../hooks/useAsyncData';
 import { calcRiseTime } from '../utils/iss/calcRiseTime';
 import { fetchWithRetries } from './BaseService';

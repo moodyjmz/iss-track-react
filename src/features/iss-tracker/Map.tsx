@@ -1,11 +1,11 @@
 import { use, Suspense, JSX, useEffect } from 'react';
-import { fetchCountries } from './services/CountriesService';
+import { fetchCountries } from '../../services/CountriesService';
 import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
-import { useAsyncData } from './hooks/useAsyncData';
+import { useAsyncData } from '../../hooks/useAsyncData';
 import './map.css';
 import { MapWrapper } from './components/MapWrapper';
-import { WindowStateContext } from './context/WindowState';
-import { useIsPageFocused } from './hooks/useIsPageFocused';
+import { WindowStateContext } from '../../context/WindowState';
+import { useIsPageFocused } from '../../hooks/useIsPageFocused';
 
 function fallbackRender({ error, resetErrorBoundary }: FallbackProps): JSX.Element {
   return (

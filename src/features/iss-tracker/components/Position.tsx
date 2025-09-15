@@ -1,5 +1,5 @@
 import { JSX } from 'react';
-import { Coordinates } from '../defs/coordinates';
+import { Coordinates } from '../../../types/coordinates';
 
 // Define a type for the position prop
 interface PositionProps {

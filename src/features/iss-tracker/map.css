@@ -1,5 +1,5 @@
-@import url('./css/vars.css');
-@import url('./css/grid.css');
+@import url('../../styles/vars.css');
+@import url('../../styles/grid.css');
 @keyframes scaling {
     0% {
         transform: scale(0);

@@ -1,6 +1,6 @@
 import { getDistance } from 'geolib';
 
-import { Country } from '../../defs/country';
+import { Country } from '../../types/country';
 
 export function getClosestCountry(
   countries: Country[],

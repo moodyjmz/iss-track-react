@@ -1,7 +1,7 @@
 import { JSX } from 'react';
 import './App.css';
-import Map from './feature/map/Map';
-import { WindowStateProvider } from './feature/map/context/WindowState';
+import Map from './features/iss-tracker/Map';
+import { WindowStateProvider } from './context/WindowState';
 
 function App(): JSX.Element {
   return (

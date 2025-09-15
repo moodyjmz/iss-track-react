@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useMemo, use, useCallback } from "react";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { fetchCurrentTelemetry } from '../../services/IssService';
-import { usePolling } from '../../hooks/usePolling';
+import { fetchCurrentTelemetry } from '../../../../services/IssService';
+import { usePolling } from '../../../../hooks/usePolling';
 import Loader from '../Loader/Loader';
 import L from 'leaflet';
 import iss from './iss.png';
-import { useIsPageFocused } from '../../hooks/useIsPageFocused';
-import { Country } from '../../defs/country';
-import { Coordinates } from '../../defs/coordinates';
-import { getClosestCapital } from '../../utils/countries/getClosestCapital';
+import { useIsPageFocused } from '../../../../hooks/useIsPageFocused';
+import { Country } from '../../../../types/country';
+import { Coordinates } from '../../../../types/coordinates';
+import { getClosestCapital } from '../../../../utils/countries/getClosestCapital';
 import ValueDisplay from '../ValueDisplay';
-import { ISSStats } from '../../defs/ISSStats';
-import speedFromUnit from '../../utils/iss/speedFromUnit';
-import { WindowStateContext } from '../../context/WindowState';
+import { ISSStats } from '../../../../types/ISSStats';
+import speedFromUnit from '../../../../utils/iss/speedFromUnit';
+import { WindowStateContext } from '../../../../context/WindowState';
 
 interface DisplayPositionProps {
     map: L.Map;

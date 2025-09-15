@@ -1,10 +1,10 @@
 import { useState, useRef, Suspense, useCallback, JSX } from 'react';
-import { fetchFuturePositionForLocation } from '../services/IssService';
+import { fetchFuturePositionForLocation } from '../../../services/IssService';
 import RiseTime from './RiseTime';
 import Loader from './Loader/Loader';
-import { useAsyncData } from '../hooks/useAsyncData';
-import { getCityFromId } from '../utils/countries/getCityFromId';
-import { Country } from '../defs/country';
+import { useAsyncData } from '../../../hooks/useAsyncData';
+import { getCityFromId } from '../../../utils/countries/getCityFromId';
+import { Country } from '../../../types/country';
 
 
 interface FuturePassProps {
