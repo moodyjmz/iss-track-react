@@ -1,0 +1,10 @@
+:root {
+    --grid-size: 100px;
+    --border-radius: 5px;
+    --border-color: #422761;
+    --content-bg-color: rgba(0, 0, 0, 0.3);
+    --content-header-large-min-cqi: 5cqi;
+    --content-header-large-max-cqi: 15cqb;
+    --content-header-small-min-cqi: 1cqi;
+    --content-header-small-max-cqi: 5cqb;
+}
