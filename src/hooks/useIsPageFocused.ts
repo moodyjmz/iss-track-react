@@ -12,7 +12,6 @@ export function useIsPageFocused(callback: (isVisible: boolean) => void): boolea
         const { signal } = controller;
 
         const handleVisibilityChange = () => {
-            console.log('document.hasFocus()', document.hasFocus());
             setIsVisible(document.hasFocus());
         };
 
@@ -21,6 +20,5 @@ export function useIsPageFocused(callback: (isVisible: boolean) => void): boolea
 
         return () => controller.abort();
     }, []);
-    console.log('isVisible', isVisible);
     return isVisible;
 }

@@ -26,7 +26,6 @@ export default function Map(): JSX.Element {
 
 
   const activeClassName = 'out-of-focus ' + (isActive ? 'active' : 'inactive');
-  console.log(activeClassName);
   return (
     <div>
 
