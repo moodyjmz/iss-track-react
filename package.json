@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/user-event": "^13.5.0",
     "@types/leaflet": "^1.9.17",
     "geolib": "^3.3.4",
     "json-server": "^0.17.4",
@@ -17,9 +15,17 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "vite build",
+    "build": "npm run test:run && npm run typecheck && vite build",
+    "build:ci": "vite build",
     "serve": "vite preview",
-    "json": "json-server dummy-json-src/mock/all.js --port 8000"
+    "json": "json-server dummy-json-src/mock/all.js --port 8000",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc --noEmit",
+    "prebuild": "npm run test:run && npm run typecheck"
   },
   "eslintConfig": {
     "extends": [
@@ -40,13 +46,18 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^16.2.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.1",
     "@typescript-eslint/eslint-plugin": "^8.29.0",
     "@typescript-eslint/parser": "^8.29.0",
-    "@vitejs/plugin-react": "^4.3.4",
+    "@vitejs/plugin-react": "^4.7.0",
+    "@vitest/ui": "^3.2.4",
+    "jsdom": "^27.0.0",
     "typescript": "^5.8.3",
-    "vite": "^6.2.5"
+    "vite": "^6.2.5",
+    "vitest": "^3.2.4"
   }
 }

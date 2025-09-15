@@ -24,11 +24,15 @@ npm run serve
 # Start mock API server (runs on port 8000)
 npm run json
 
-# Run tests (currently broken - needs fixing)
-npm test
+# Testing
+npm run test           # Run tests in watch mode
+npm run test:run       # Run tests once
+npm run test:ui        # Run tests with visual UI
+npm run test:coverage  # Run tests with coverage report
 
-# Security audit
-npm audit
+# Quality assurance
+npm run typecheck      # Run TypeScript type checking
+npm audit              # Security audit
 ```
 
 ## Architecture Overview
@@ -56,6 +60,7 @@ src/
 - `src/context/WindowState.tsx`: Context for managing polling suspension when page inactive
 - `src/components/`: Shared UI components like Loader and ValueDisplay
 - `src/services/`: API service layer with proper error handling and retry logic
+- `src/lib/scrambler-element.ts`: Custom web component for animated number display
 
 ### API Integration
 - **ISS Current Position**: `https://api.wheretheiss.at/v1/satellites/25544`
@@ -102,6 +107,39 @@ When adding new features, follow this pattern:
 - **Naming**: Prefix with `use` (e.g., `useAsyncData.ts`)
 - **Responsibility**: Keep hooks focused on a single concern
 - **Dependencies**: Import from other shared modules as needed
+
+## Testing
+
+### Test Framework
+- **Framework**: Vitest with React Testing Library
+- **Environment**: jsdom for DOM simulation
+- **Coverage**: V8 provider with text, HTML, and JSON reports
+- **UI**: Vitest UI available via `npm run test:ui`
+
+### Test Scripts
+- `npm run test` - Run tests in watch mode
+- `npm run test:run` - Run tests once (used in build pipeline)
+- `npm run test:coverage` - Generate coverage reports
+- `npm run test:ui` - Open Vitest web UI
+
+### Test Organization
+```
+src/
+├── components/          # Component tests (.test.tsx)
+├── hooks/              # Hook tests (.test.ts)
+├── services/           # Service tests (.test.ts)
+├── utils/              # Utility tests (.test.ts)
+├── lib/               # Web component tests (.test.ts)
+└── test/
+    ├── setup.ts        # Test environment setup
+    └── utils.tsx       # Shared test utilities
+```
+
+### Build Integration
+- Tests run automatically before every build (`prebuild` script)
+- CI pipeline runs tests and typecheck before deployment
+- Build fails if tests fail, preventing broken deployments
+- Use `npm run build:ci` to skip tests in CI (after explicit test step)
 
 ### Import Conventions
 Follow these import path patterns:
