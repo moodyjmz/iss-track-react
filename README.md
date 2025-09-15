@@ -40,6 +40,7 @@ The ISS Tracker provides a comprehensive view of the International Space Station
 
 - **Framework**: React 19 with TypeScript
 - **Build Tool**: Vite for fast development and optimized builds
+- **Testing**: Vitest with React Testing Library for comprehensive test coverage
 - **Mapping**: Leaflet with React-Leaflet for interactive maps
 - **Styling**: CSS with custom properties and modular stylesheets
 - **APIs**:
@@ -83,6 +84,12 @@ npm run serve          # Preview production build
 
 # API Development
 npm run json           # Start mock JSON server on port 8000
+
+# Testing
+npm run test           # Run tests in watch mode
+npm run test:run       # Run tests once
+npm run test:ui        # Run tests with visual UI
+npm run test:coverage  # Run tests with coverage report
 
 # Quality Assurance
 npm run lint           # Run ESLint (when configured)
