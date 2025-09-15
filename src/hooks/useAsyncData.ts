@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
-export type ApiArgs = {args:any, signal:AbortSignal}|undefined;
+import type { ApiArgs, ApiFetchFunction } from '../types/apiCallOptions';
 
-export type ApiFetchFunction = ({}: ApiArgs) => Promise<any>;
-
-export function useAsyncData(promiseFn: ApiFetchFunction, args?:any): Promise<any>|null {
-    const [dataPromise, setdataPromise] = useState<Promise<any>|null>(null);
+export function useAsyncData<T = unknown>(
+    promiseFn: ApiFetchFunction<T>,
+    args?: Record<string, unknown>
+): Promise<T> | null {
+    const [dataPromise, setdataPromise] = useState<Promise<T> | null>(null);
     const abortController = useRef<AbortController|null>(null);
 
     useEffect(() => {

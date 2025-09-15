@@ -1,13 +1,6 @@
 import { useRef, useEffect } from 'react';
+import type { ValueDisplayProps } from '../types/components';
 import '../lib/scrambler-element.ts';
-
-interface ValueDisplayProps {
-    value: string | number;
-    title: string;
-    decimalPlaces?: number;
-    unit?: string;
-    locale?: string;
-}
 
 export default function ValueDisplay({ value, title, decimalPlaces, unit, locale = 'en-GB' }: ValueDisplayProps) {
     const scrambler = useRef<HTMLElement | null>(null);

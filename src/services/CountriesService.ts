@@ -1,9 +1,10 @@
 import { COUNTRIES_SERVICE_URL } from '../apis/endpoints';
 import { sortCities } from '../utils/countries/sortCities';
 import { fetchWithRetries } from './BaseService';
-import { ApiArgs } from '../hooks/useAsyncData';
+import type { ApiArgs } from '../types/apiCallOptions';
+import type { Country } from '../types/country';
 
-export function fetchCountries(opts?: ApiArgs): Promise<any> {
+export function fetchCountries(opts?: ApiArgs): Promise<Country[]> {
 const transport = opts?.args?.transport || {};
   if (opts?.signal) {
     transport.signal = opts.signal;

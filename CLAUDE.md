@@ -124,9 +124,11 @@ import { ErrorBoundary } from 'react-error-boundary';
 
 ### Type Definitions
 - **Location**: Place all TypeScript types in `src/types/`
-- **Naming**: Use descriptive names with interfaces for complex objects
-- **Exports**: Export types from individual files, not from an index file
-- **Sharing**: Import types across features using relative paths
+- **Organization**: Types are organized by domain (components, coordinates, country, ISSStats, etc.)
+- **Central Export**: Use `src/types/index.ts` for convenient imports across the application
+- **Documentation**: All types include JSDoc comments explaining their purpose and properties
+- **Best Practices**: Use `interface` for object shapes, `type` for unions/aliases, prefer `unknown` over `any`
+- **Import Style**: Use `import type { ... }` for type-only imports to improve build performance
 
 ### CSS and Styling
 - **Global styles**: Place in `src/styles/` (vars.css, grid.css)
