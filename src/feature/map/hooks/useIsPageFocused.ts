@@ -4,7 +4,7 @@ export function useIsPageFocused(callback: (isVisible: boolean) => void): boolea
     const [isVisible, setIsVisible] = useState<boolean>(true);
 
     useEffect(() => {
-        // callback && callback(isVisible);
+        callback && callback(isVisible);
     }, [isVisible]);
 
     useEffect(() => {
