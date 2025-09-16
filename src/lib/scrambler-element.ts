@@ -149,7 +149,7 @@ class ScramblerElement extends HTMLElement implements ScramblerElement{
         this.render();
     }
 
-    updateDuration(duration: string | number | null) {
+    updateDuration(duration: string) {
         this.duration = duration;
     }
 
