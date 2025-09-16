@@ -8,6 +8,7 @@ The ISS Tracker provides a comprehensive view of the International Space Station
 
 - **Real-time tracking** of the ISS position with live updates
 - **Interactive world map** showing the ISS location and ground track
+- **Orbital history visualisation** with enhanced tracking lines and historical path display
 - **Telemetry display** with animated values for altitude, velocity, and coordinates
 - **Location intelligence** showing the nearest city to the ISS
 - **Future pass predictions** - select any city and see when the ISS will be overhead in the next 12 hours
@@ -18,28 +19,30 @@ The ISS Tracker provides a comprehensive view of the International Space Station
 ### 🎯 Core Functionality
 - **Live ISS Position**: Real-time tracking with coordinates, altitude, and velocity
 - **Interactive Map**: Leaflet-powered world map with the ISS position marker
+- **Orbital Path Visualisation**: Enhanced historical tracking with thicker orbital lines for better visibility
 - **Nearest City Display**: Shows which city the ISS is currently closest to
 - **Future Pass Calculator**: Predicts when the ISS will be visible from any selected location
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
 
 ### 🎨 User Experience
 - **Smooth Animations**: Custom scrambler element with animated number transitions
-- **Internationalized Formatting**: Locale-aware number and unit formatting
-- **Performance Optimized**: Intelligent polling that respects browser focus state
+- **Internationalised Formatting**: Locale-aware number and unit formatting
+- **Performance Optimised**: Intelligent polling that respects browser focus state
 - **Error Handling**: Robust error boundaries with graceful fallbacks
 - **Loading States**: Clear loading indicators during data fetching
 
 ### 🔧 Technical Features
-- **TypeScript**: Fully typed codebase with comprehensive type definitions
-- **Modular Architecture**: Clean separation of concerns with feature-based organization
+- **TypeScript**: Fully typed codebase with global type declarations and module path aliases
+- **Modular Architecture**: Clean separation of concerns with feature-based organisation
 - **Custom Web Components**: Animated value display with scrambler effects
 - **Smart API Management**: AbortController-based request handling with retry logic
+- **Performance Optimisations**: React.memo, useCallback, and useMemo for optimal rendering
 - **Performance Hooks**: Custom hooks for page focus detection and async data management
 
 ## 🛠 Technical Stack
 
 - **Framework**: React 19 with TypeScript
-- **Build Tool**: Vite for fast development and optimized builds
+- **Build Tool**: Vite for fast development and optimised builds
 - **Testing**: Vitest with React Testing Library for comprehensive test coverage
 - **Mapping**: Leaflet with React-Leaflet for interactive maps
 - **Styling**: CSS with custom properties and modular stylesheets
@@ -101,22 +104,38 @@ npm audit              # Check for security vulnerabilities
 
 The application follows a modular architecture with clear separation of concerns:
 
-- **`src/components/`** - Reusable UI components
-- **`src/features/`** - Feature-specific code (ISS tracker)
-- **`src/services/`** - API service layer with error handling
-- **`src/hooks/`** - Custom React hooks for state management
-- **`src/types/`** - TypeScript type definitions
+- **`src/components/`** - Reusable UI components with performance optimisations
+- **`src/features/`** - Feature-specific code (ISS tracker with orbital path visualisation)
+- **`src/services/`** - API service layer with error handling and retry logic
+- **`src/hooks/`** - Custom React hooks for state management and data fetching
+- **`src/types/`** - Global TypeScript type declarations (`.d.ts` files)
 - **`src/utils/`** - Utility functions and helpers
 - **`src/context/`** - React context providers
+- **`src/stores/`** - Zustand state management for orbital data
+
+### 🎨 Recent Improvements
+
+- **TypeScript Module System**: Refactored to use global type declarations, eliminating import conflicts
+- **Module Path Aliases**: Clean imports using `@components/*`, `@services/*`, etc.
+- **Orbital History Enhancement**: Improved visual tracking with thicker historical path lines
+- **Performance Optimisations**: Added React.memo, useCallback, and useMemo across components
+- **Type Safety**: Comprehensive TypeScript coverage with custom web component definitions
 
 ## 🌟 Future Enhancements
 
-- [ ] Historical tracking with ISS orbit visualization
+- [ ] ~~Historical tracking with ISS orbit visualisation~~ ✅ **Completed** - Enhanced orbital path tracking
+- [ ] API call optimisation to reduce duplicate requests
 - [ ] Push notifications for upcoming passes
 - [ ] Multiple satellite tracking
 - [ ] Augmented reality features for mobile
 - [ ] Social sharing of ISS sightings
 - [ ] Advanced filtering and search capabilities
+
+## 🔧 Known Issues
+
+- **Orbital History**: Some edge cases in orbital path display that need investigation
+- **API Optimisation**: Potential duplicate API calls occurring - requires analysis and optimisation
+- **UI Consistency**: Some UI inconsistencies across components that require addressing
 
 ## 📱 Live Demo
 
