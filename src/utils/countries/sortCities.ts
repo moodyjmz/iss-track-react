@@ -1,4 +1,3 @@
-import { Country } from '../../types/country';
   
   export function sortCities(rawCountries: Country[] = []): Country[] {
     const comparer = new Intl.Collator('en').compare;

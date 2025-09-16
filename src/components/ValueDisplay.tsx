@@ -1,15 +1,35 @@
-import { useRef, useEffect } from 'react';
-import type { ValueDisplayProps } from '../types/components';
-import '../lib/scrambler-element.ts';
+import { useRef, useEffect, memo, useMemo } from 'react';
+import '@/lib/scrambler-element.ts';
 
-export default function ValueDisplay({ value, title, decimalPlaces, unit, locale = 'en-GB' }: ValueDisplayProps) {
+// Force TypeScript to recognize scrambler-element
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'scrambler-element': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement>,
+        HTMLElement
+      > & {
+        value?: string;
+        unit?: string;
+        duration?: string;
+        locale?: string;
+        'decimal-places'?: string;
+        ref?: React.Ref<HTMLElement>;
+      };
+    }
+  }
+}
+
+function ValueDisplay({ value, title, decimalPlaces, unit, locale = 'en-GB' }: ValueDisplayProps) {
     const scrambler = useRef<HTMLElement | null>(null);
 
     // For numbers, pass the raw number to the scrambler element for proper animation
     // The scrambler will handle formatting internally
-    const scramblerValue = typeof value === 'number' ?
-        (typeof decimalPlaces === 'number' ? value.toFixed(decimalPlaces) : String(value)) :
-        String(value);
+    const scramblerValue = useMemo(() =>
+        typeof value === 'number' ?
+            (typeof decimalPlaces === 'number' ? value.toFixed(decimalPlaces) : String(value)) :
+            String(value)
+    , [value, decimalPlaces]);
 
     // Update the scrambler element when value changes
     useEffect(() => {
@@ -35,9 +55,11 @@ export default function ValueDisplay({ value, title, decimalPlaces, unit, locale
     }, []);
 
     return (
-        <div className='value-display'>
+        <div className='value-display out-of-focus'>
             <h6>{title}</h6>
             <scrambler-element ref={scrambler} />
         </div>
     );
 }
+
+export default memo(ValueDisplay);

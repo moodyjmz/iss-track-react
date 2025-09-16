@@ -1,17 +1,16 @@
-import { useState, useRef, Suspense, useCallback, JSX } from 'react';
-import { fetchFuturePositionForLocation } from '../../../services/IssService';
+import { useState, useRef, Suspense, useCallback, useMemo, memo } from 'react';
+import { fetchFuturePositionForLocation } from '@services/IssService';
 import RiseTime from './RiseTime';
 import Loader from './Loader/Loader';
-import { useAsyncData } from '../../../hooks/useAsyncData';
-import { getCityFromId } from '../../../utils/countries/getCityFromId';
-import { Country } from '../../../types/country';
+import { useAsyncData } from '@hooks/useAsyncData';
+import { getCityFromId } from '@utils/countries/getCityFromId';
 
 
 interface FuturePassProps {
     countries: Country[];
 }
 
-export default function FuturePass({ countries }: FuturePassProps): JSX.Element {
+function FuturePass({ countries }: FuturePassProps) {
     const [selectedCountryIndex, setSelectedCountryIndex] = useState<number>(0);
     const selectedCity = useRef(getCityFromId(countries, selectedCountryIndex));
 
@@ -22,14 +21,19 @@ export default function FuturePass({ countries }: FuturePassProps): JSX.Element 
         setSelectedCountryIndex(newIndex);
         selectedCity.current = getCityFromId(countries, newIndex);
     }, [countries]);
+
+    const countryOptions = useMemo(() =>
+        countries.map((country, index) => (
+            <option key={index} value={index}>
+                {country.capital}
+            </option>
+        )),
+        [countries]
+    );
     return (
         <div>
             <select onChange={handleCountryChange} value={selectedCountryIndex}>
-                {countries.map((country, index) => (
-                    <option key={index} value={index}>
-                        {country.capital}
-                    </option>
-                ))}
+                {countryOptions}
             </select>
             <Suspense fallback={<Loader />}>
                 {selectedCity.current && `${selectedCity.current.capital}: `}
@@ -38,3 +42,5 @@ export default function FuturePass({ countries }: FuturePassProps): JSX.Element 
         </div>
     );
 }
+
+export default memo(FuturePass);

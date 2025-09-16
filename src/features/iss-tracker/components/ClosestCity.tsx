@@ -1,6 +1,4 @@
-import { Coordinates } from '../../../types/coordinates';
-import { Country } from '../../../types/country';
-import { getClosestCapital } from '../../../utils/countries/getClosestCapital';
+import { getClosestCapital } from '@utils/countries/getClosestCapital';
 
 interface ClosestCapitalProps {
     countries: Country[];

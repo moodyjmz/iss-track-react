@@ -1,3 +1,5 @@
+// Import type definitions to register them globally
+
 const html = String.raw;
 
 const DEFAULT_LOCALE = 'en-GB';
@@ -243,12 +245,13 @@ class ScramblerElement extends HTMLElement implements ScramblerElement{
     }
 
     animateValue() {
-        let startTimestamp;
+        let startTimestamp: number;
         const iterator = this.scrambleIteration;
-        const changeTime = this.duration / this.scrambleSource;
-        let stepTime = this.duration;
+        const duration = Number(this.duration);
+        const changeTime = duration / this.scrambleSource;
+        let stepTime = Number(duration);
 
-        const step = (timestamp) => {
+        const step = (timestamp: number) => {
             if (!startTimestamp) {
                 startTimestamp = timestamp;
             }
