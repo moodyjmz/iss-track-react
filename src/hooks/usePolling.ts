@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { logger } from '../utils/logger';
+import { logger } from '@utils/logger';
 
 type FetchFunction<T> = (options: { signal: AbortSignal }) => Promise<T>;
 

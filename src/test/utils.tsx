@@ -1,6 +1,6 @@
 import { render, RenderOptions } from '@testing-library/react';
 import { ReactElement } from 'react';
-import { WindowStateProvider } from '../context/WindowState';
+import { WindowStateProvider } from '@context/WindowState';
 
 /**
  * Custom render function that includes common providers

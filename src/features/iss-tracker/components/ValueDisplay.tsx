@@ -31,7 +31,6 @@ export default function ValueDisplay({ value, title, decimalPlaces, unit, locale
     return (
         <div className='value-display'>
             <h6>{title}</h6>
-            {/* <span>{finalValue}</span> */}
             <scrambler-element ref={scrambler} unit={unit}/>
         </div>
     );

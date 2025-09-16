@@ -1,5 +1,3 @@
-import { Country } from '../../types/country';
-import { Coordinates } from '../../types/coordinates';
 import { getClosestCountry } from './getClosestCountry';
 
 interface CapitalProps {

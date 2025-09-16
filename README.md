@@ -120,7 +120,7 @@ The application follows a modular architecture with clear separation of concerns
 
 ## 📱 Live Demo
 
-Visit the live application: [ISS Tracker](https://your-github-username.github.io/iss-track-react/)
+Visit the live application: [ISS Tracker](https://jamesmanuel.github.io/iss-track-react/)
 
 ## 🤝 Contributing
 

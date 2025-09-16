@@ -1,6 +1,10 @@
+import { memo } from 'react';
 import './loader.css';
-export default function Loader(){
+
+function Loader(){
     return (
         <span className="loader"></span>
     )
 }
+
+export default memo(Loader);

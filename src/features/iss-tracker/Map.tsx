@@ -1,13 +1,14 @@
-import { use, Suspense, JSX, useEffect } from 'react';
-import { fetchCountries } from '../../services/CountriesService';
+import { use, Suspense, useEffect } from 'react';
+import { fetchCountries } from '@services/CountriesService';
 import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
-import { useAsyncData } from '../../hooks/useAsyncData';
+import { useAsyncData } from '@hooks/useAsyncData';
 import './map.css';
 import { MapWrapper } from './components/MapWrapper';
-import { WindowStateContext } from '../../context/WindowState';
-import { useIsPageFocused } from '../../hooks/useIsPageFocused';
+import { WindowStateContext } from '@context/WindowState';
+import { useIsPageFocused } from '@hooks/useIsPageFocused';
+import OrbitalControlPanel from '@components/OrbitalControlPanel/OrbitalControlPanel';
 
-function fallbackRender({ error, resetErrorBoundary }: FallbackProps): JSX.Element {
+function fallbackRender({ error, resetErrorBoundary }: FallbackProps) {
   return (
     <div role="alert">
       <p>Something went wrong:</p>
@@ -28,6 +29,7 @@ export default function Map(): JSX.Element {
   const activeClassName = 'out-of-focus ' + (isActive ? 'active' : 'inactive');
   return (
     <div>
+      <OrbitalControlPanel />
 
       <ErrorBoundary
         fallbackRender={fallbackRender}

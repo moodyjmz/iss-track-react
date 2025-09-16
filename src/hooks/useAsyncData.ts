@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import type { ApiArgs, ApiFetchFunction } from '../types/apiCallOptions';
 
 export function useAsyncData<T = unknown>(
     promiseFn: ApiFetchFunction<T>,

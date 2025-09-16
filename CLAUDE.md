@@ -49,7 +49,7 @@ src/
 ├── types/               # TypeScript type definitions (country, coordinates, ISSStats)
 ├── utils/               # Utility functions (countries, iss, logger, numberFormatter)
 ├── features/            # Feature-specific code
-│   └── iss-tracker/     # ISS tracking feature with map visualization
+│   └── iss-tracker/     # ISS tracking feature with map visualisation
 ├── styles/              # Global CSS files (vars.css, grid.css)
 └── apis/                # API endpoint configurations
 ```
@@ -70,7 +70,7 @@ src/
 ### Important Notes
 - React Strict Mode causes double API calls during development - abort signals are critical for preventing blocked endpoints
 - Polling automatically suspends when the browser tab is inactive to conserve resources
-- Application uses Leaflet maps via react-leaflet for geographic visualization
+- Application uses Leaflet maps via react-leaflet for geographic visualisation
 - The architecture now supports adding multiple features alongside the ISS tracker in the `features/` directory
 
 ## Development Approaches
@@ -167,6 +167,102 @@ import { ErrorBoundary } from 'react-error-boundary';
 - **Documentation**: All types include JSDoc comments explaining their purpose and properties
 - **Best Practices**: Use `interface` for object shapes, `type` for unions/aliases, prefer `unknown` over `any`
 - **Import Style**: Use `import type { ... }` for type-only imports to improve build performance
+
+## Orbital Visualisation System
+
+### Features
+The ISS tracker includes advanced orbital visualisation capabilities:
+
+- **Historical Tracking**: View ISS orbital path for the past 24 hours
+- **Future Predictions**: Display predicted ISS positions for up to 6 hours
+- **Ground Track Visualization**: Show ISS ground track patterns
+- **Real-time Control Panel**: Toggle features and adjust settings
+- **Customizable Appearance**: Control path colors, opacity, and update intervals
+
+### State Management (Zustand)
+Orbital visualisation uses Zustand for state management:
+
+```typescript
+import { useOrbitalStore } from '../stores/orbitalStore';
+
+// Access store state and actions
+const {
+  settings,
+  isHistoricalTrackingEnabled,
+  toggleHistoricalTracking,
+  updateSettings,
+} = useOrbitalStore();
+```
+
+### Key Components
+
+#### OrbitalControlPanel
+- **Location**: `src/components/OrbitalControlPanel/`
+- **Purpose**: Floating control panel for managing orbital visualisation
+- **Features**: Toggle switches, sliders for duration/opacity, color picker
+- **Position**: Fixed top-right with responsive design
+
+#### OrbitalVisualization
+- **Location**: `src/components/OrbitalPath/`
+- **Purpose**: Renders orbital paths on Leaflet map
+- **Layers**: Historical path, future predictions, ground track
+- **Integration**: Embedded within MapContainer component
+
+#### OrbitalDataService
+- **Location**: `src/services/OrbitalDataService.ts`
+- **Purpose**: Fetches historical and predicted ISS positions
+- **API**: Uses wheretheiss.at API with rate limiting (1 req/sec)
+- **Features**: Chunk requests, abort signal support, retry logic with exponential backoff, error handling
+
+#### useOrbitalData Hook
+- **Location**: `src/hooks/useOrbitalData.ts`
+- **Purpose**: Manages orbital data fetching and updates
+- **Features**: Automatic polling, cleanup on unmount, settings synchronization
+
+### Usage Examples
+
+#### Enable Historical Tracking
+```typescript
+import { useOrbitalStore } from '../stores/orbitalStore';
+
+function MyComponent() {
+  const { toggleHistoricalTracking } = useOrbitalStore();
+
+  return (
+    <button onClick={toggleHistoricalTracking}>
+      Enable Orbital Tracking
+    </button>
+  );
+}
+```
+
+#### Customize Orbital Settings
+```typescript
+const { updateSettings } = useOrbitalStore();
+
+// Update path duration to 4 hours
+updateSettings({ pathDuration: 4 });
+
+// Change path color and opacity
+updateSettings({
+  pathColor: '#ff6600',
+  pathOpacity: 0.8
+});
+```
+
+### API Integration
+- **Historical Data**: `/satellites/25544/positions?timestamps=...`
+- **Rate Limiting**: 1 request per second with automatic delays
+- **Data Chunks**: Max 10 timestamps per request
+- **Retry Logic**: Exponential backoff (1s, 2s, 4s) for failed requests
+- **Error Handling**: Network errors, abort signals, API failures with proper propagation
+- **Caching**: No caching - always fresh data for real-time tracking
+
+### Performance Considerations
+- **Efficient Updates**: Only fetch data when tracking is enabled
+- **Abort Controllers**: Cancel requests on component unmount
+- **Minimal Re-renders**: Zustand state management reduces unnecessary updates
+- **Chunked Requests**: Large time ranges split into manageable API calls
 
 ### CSS and Styling
 - **Global styles**: Place in `src/styles/` (vars.css, grid.css)

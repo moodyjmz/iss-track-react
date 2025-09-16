@@ -1,0 +1,24 @@
+{
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+  "typescript.suggest.autoImports": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.format.enable": true,
+  "typescript.validate.enable": true,
+  "typescript.surveys.enabled": false,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.suggest.includeCompletionsForModuleExports": true,
+  "typescript.suggest.includeCompletionsForImportStatements": true,
+  "typescript.preferences.includeCompletionsForImportStatements": true,
+  "typescript.workspaceSymbols.scope": "allOpenProjects",
+  "typescript.references.enabled": true,
+  "path-intellisense.mappings": {
+    "@": "${workspaceFolder}/src",
+    "@features": "${workspaceFolder}/src/features",
+    "@components": "${workspaceFolder}/src/components",
+    "@hooks": "${workspaceFolder}/src/hooks",
+    "@services": "${workspaceFolder}/src/services",
+    "@stores": "${workspaceFolder}/src/stores",
+    "@utils": "${workspaceFolder}/src/utils",
+    "@context": "${workspaceFolder}/src/context"
+  }
+}
